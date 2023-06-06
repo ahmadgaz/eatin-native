@@ -1,10 +1,14 @@
 {
-  "expo": {
-    "scheme": "acme",
-    "web": {
-      "bundler": "metro"
-    },
-    "name": "Learning-typescript",
-    "slug": "Learning-typescript"
-  }
+    "expo": {
+        "scheme": "acme",
+        "web": {
+            "bundler": "metro"
+        },
+        "name": "Learning-typescript",
+        "slug": "Learning-typescript",
+        "splash": {
+            "resizeMode": "contain",
+            "backgroundColor": "#fffecb"
+        }
+    }
 }
