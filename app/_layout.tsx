@@ -40,5 +40,15 @@ export default function Layout() {
 
     const theme = useTheme("light");
 
-    return <Stack screenOptions={{ headerShown: false }} />;
+    return (
+        <Stack
+            screenOptions={{
+                headerShown: false,
+                orientation: "portrait",
+                contentStyle: {
+                    backgroundColor: theme.options.colors.neutralLight[500],
+                },
+            }}
+        />
+    );
 }

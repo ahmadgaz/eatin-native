@@ -6,9 +6,11 @@
         },
         "name": "Learning-typescript",
         "slug": "Learning-typescript",
+        "backgroundColor": "#fffecb",
+        "primaryColor": "#fffecb",
         "splash": {
-            "resizeMode": "contain",
             "backgroundColor": "#fffecb"
-        }
+        },
+        "orientation": "portrait"
     }
 }

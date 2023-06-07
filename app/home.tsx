@@ -1,14 +1,28 @@
 import { useRouter } from "expo-router";
 import { View, Text, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Loading from "../components/common/loading";
+import useLoadAssets from "../hooks/useLoadAssets";
 import { useTheme } from "../theme";
 
+const images = [
+    {
+        src: require("../assets/images/Logo-02.png"),
+        style: { width: 150, height: 46.25, margin: 25 },
+    },
+    {
+        src: require("../assets/animations/Hero.gif"),
+        style: { width: 300, height: 300, marginBottom: 15, marginTop: 5 },
+    },
+];
+
 // Home page
-// TODO: Create a loading screen (will be used as a splash screen as well) with the logo ear flutter animation above a grainy gaussian blurred timewarped bg
-// Loading screen must load after all assets/ data is loaded
+// TODO: Add grainy gaussian blurred timewarped bg
 export default function Home() {
     const router = useRouter();
     const theme = useTheme("light");
+
+    const [assetsLoaded, assets] = useLoadAssets(images);
 
     return (
         <SafeAreaView
@@ -20,14 +34,8 @@ export default function Home() {
                 backgroundColor: theme.options.colors.neutralLight[500],
             }}
         >
-            <Image
-                source={require("../assets/images/Logo-02.png")}
-                style={{ width: 150, height: 46.25, margin: 10 }}
-            />
-            <Image
-                source={require("../assets/images/Hero.gif")}
-                style={{ width: 300, height: 300, margin: 15 }}
-            />
+            <Loading isPageLoaded={assetsLoaded} />
+            <View>{assets[0]}</View>
             <Text
                 style={{
                     textAlign: "center",
@@ -36,6 +44,7 @@ export default function Home() {
             >
                 Schedule life with ease!
             </Text>
+            <View>{assets[1]}</View>
             <Text
                 style={{
                     textAlign: "center",
