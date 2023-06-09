@@ -10,10 +10,8 @@ export default function useLoadAssets(
 
     useEffect(() => {
         if (loadCount === assetList.length) {
-            console.log(loadCount, "true");
             setAssetsLoaded(true);
         } else {
-            console.log(loadCount, "false");
             setAssetsLoaded(false);
         }
     }, [loadCount, assetList.length]);

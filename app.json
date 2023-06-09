@@ -4,8 +4,8 @@
         "web": {
             "bundler": "metro"
         },
-        "name": "Learning-typescript",
-        "slug": "Learning-typescript",
+        "name": "Bookbunny",
+        "slug": "Bookbunny",
         "backgroundColor": "#fffecb",
         "primaryColor": "#fffecb",
         "splash": {
