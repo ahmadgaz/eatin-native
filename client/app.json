@@ -4,8 +4,8 @@
         "web": {
             "bundler": "metro"
         },
-        "name": "Bookbunny",
-        "slug": "Bookbunny",
+        "name": "eatin",
+        "slug": "eatin",
         "backgroundColor": "#fffecb",
         "primaryColor": "#fffecb",
         "splash": {
