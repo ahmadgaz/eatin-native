@@ -62,16 +62,9 @@ export const useTheme = (mode: "light" | "dark") => {
             style: "italic" | "normal" = "normal"
         ) => {
             return StyleSheet.create({
-                hero: {
-                    fontFamily:
-                        weight === "bold" && style === "italic"
-                            ? "LatoBlackItalic"
-                            : weight === "bold"
-                            ? "LatoBlack"
-                            : style === "italic"
-                            ? "LatoBoldItalic"
-                            : "LatoBold",
-                    fontSize: 48,
+                logo: {
+                    fontFamily: "ProspectusProMBlack",
+                    fontSize: 60,
                     color: options.colors.text[600],
                 },
                 h1: {

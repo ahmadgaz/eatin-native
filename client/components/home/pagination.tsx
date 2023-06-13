@@ -10,6 +10,8 @@ import Animated, {
     useSharedValue,
     withTiming,
 } from "react-native-reanimated";
+import { useTheme } from "../../theme";
+import hexToRgb from "../../utils/hexToRgb";
 
 const screen = Dimensions.get("screen");
 
@@ -20,6 +22,7 @@ export default function Pagination({
     data: carouselDataType[];
     scrollX: SharedValue<number>;
 }) {
+    const theme = useTheme("light");
     const styles = homeStyles("light");
 
     return (
@@ -45,7 +48,7 @@ export default function Pagination({
                     (idx + 1) * screen.width,
                 ];
 
-                const animatedStyle = useAnimatedStyle(() => {
+                const width = useAnimatedStyle(() => {
                     const dotWidth = interpolate(
                         scrollX.value,
                         inputRange,
@@ -57,11 +60,53 @@ export default function Pagination({
                         width: dotWidth,
                     };
                 });
+                const color = useAnimatedStyle(() => {
+                    const r = [
+                        hexToRgb(theme.options.colors.background[400]).r,
+                        hexToRgb(theme.options.colors.background[500]).r,
+                    ];
+                    const g = [
+                        hexToRgb(theme.options.colors.background[400]).g,
+                        hexToRgb(theme.options.colors.background[500]).g,
+                    ];
+                    const b = [
+                        hexToRgb(theme.options.colors.background[400]).b,
+                        hexToRgb(theme.options.colors.background[500]).b,
+                    ];
+                    const dotColorRed = interpolate(
+                        scrollX.value,
+                        inputRange,
+                        [r[0], r[1], r[0]],
+                        Extrapolate.CLAMP
+                    );
+                    const dotColorGreen = interpolate(
+                        scrollX.value,
+                        inputRange,
+                        [g[0], g[1], g[0]],
+                        Extrapolate.CLAMP
+                    );
+                    const dotColorBlue = interpolate(
+                        scrollX.value,
+                        inputRange,
+                        [b[0], b[1], b[0]],
+                        Extrapolate.CLAMP
+                    );
+
+                    return {
+                        backgroundColor: `rgb(${dotColorRed}, ${dotColorGreen}, ${dotColorBlue})`,
+                    };
+                });
 
                 return (
                     <Animated.View
                         key={idx}
-                        style={[styles.carouselPaginationDot, animatedStyle]}
+                        style={[
+                            idx === 0
+                                ? styles.carouselPaginationDotWide
+                                : styles.carouselPaginationDotRegular,
+                            width,
+                            color,
+                        ]}
                     />
                 );
             })}

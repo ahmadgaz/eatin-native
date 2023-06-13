@@ -4,6 +4,7 @@ import { Modal, View } from "react-native";
 import { useTheme } from "../../theme";
 import { LoadingProps } from "./types";
 import commonStyles from "./styles";
+import { StatusBar } from "expo-status-bar";
 
 // Loading screen component
 export default function Loading({ isPageLoaded }: LoadingProps) {
@@ -27,6 +28,7 @@ export default function Loading({ isPageLoaded }: LoadingProps) {
             visible={isModalVisible}
             animationType="fade"
         >
+            <StatusBar style="dark" />
             <View style={styles.loadingModal}>
                 <AnimatedLottieView
                     source={require("../../assets/animations/eatin-loading-icon.json")}

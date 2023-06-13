@@ -7,26 +7,48 @@ export default function styles(mode: "light" | "dark") {
     return StyleSheet.create({
         carouselPaginationContainer: {
             position: "absolute",
-            bottom: 425,
+            bottom: 440,
             flexDirection: "row",
             width: "100%",
             alignItems: "center",
             justifyContent: "center",
         },
-        carouselPaginationDot: {
-            // width: 8,
+        carouselPaginationDotWide: {
+            width: 24,
             height: 8,
             borderRadius: 4,
             marginHorizontal: 2,
-            backgroundColor: theme.options.colors.background[500],
         },
-        carouselContainer: {
-            padding: 30,
+        carouselPaginationDotRegular: {
+            width: 8,
+            height: 8,
+            borderRadius: 4,
+            marginHorizontal: 2,
         },
-        carouselContent: {},
+        carouselSlideContainer: {
+            paddingHorizontal: 30,
+            paddingTop: 105,
+        },
+        carouselSlideContent: {},
+        carouselSlideTitle: {
+            margin: 3,
+            color: theme.options.colors.background[500],
+            textAlign: "left",
+        },
+        carouselSlideText: {
+            marginTop: 20,
+            marginHorizontal: 3,
+            color: theme.options.colors.background[500],
+            textAlign: "left",
+        },
+        logo: {
+            position: "absolute",
+            top: 70,
+            margin: 3,
+            color: theme.options.colors.background[500],
+        },
         container: {
             flex: 1,
-            justifyContent: "center",
             alignItems: "center",
         },
         heroVideoContainer: {
@@ -36,9 +58,22 @@ export default function styles(mode: "light" | "dark") {
             right: 0,
             bottom: 0,
             flex: 1,
+            zIndex: -2,
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        backdrop: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            flex: 1,
             zIndex: -1,
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: "black",
+            opacity: 0.3,
         },
     });
 }

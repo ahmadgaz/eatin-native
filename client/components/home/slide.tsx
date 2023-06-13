@@ -4,6 +4,7 @@ import { Dimensions } from "react-native";
 import { carouselDataType } from "./types";
 import { useTheme } from "../../theme";
 import homeStyles from "./styles";
+import HighlightedText from "../common/highlightedText";
 
 const screen = Dimensions.get("screen");
 
@@ -16,25 +17,23 @@ export default function Slide({ item }: { item: carouselDataType }) {
             style={{
                 width: screen.width,
                 height: screen.height,
-                ...styles.carouselContainer,
+                ...styles.carouselSlideContainer,
             }}
         >
-            <View style={styles.carouselContent}>
-                <Text
-                    style={{
-                        margin: 3,
-                        textAlign: "left",
-                        ...theme.typography().h5,
-                    }}
+            <View style={styles.carouselSlideContent}>
+                <HighlightedText
+                    style={[
+                        theme.typography("bold").h1,
+                        styles.carouselSlideTitle,
+                    ]}
                 >
                     {item.title}
-                </Text>
+                </HighlightedText>
                 <Text
-                    style={{
-                        margin: 3,
-                        textAlign: "left",
-                        ...theme.typography().subtitle1,
-                    }}
+                    style={[
+                        theme.typography("bold").subtitle1,
+                        styles.carouselSlideText,
+                    ]}
                 >
                     {item.description}
                 </Text>
