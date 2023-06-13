@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { Modal, View } from "react-native";
 import { useTheme } from "../../theme";
 import { LoadingProps } from "./types";
+import commonStyles from "./styles";
 
 // Loading screen component
 export default function Loading({ isPageLoaded }: LoadingProps) {
     const theme = useTheme("light");
+    const styles = commonStyles("light");
     const isModalVisible = !isPageLoaded;
     const [isInitialLayerVisible, setIsInitialLayerVisible] =
         useState<boolean>(true);
@@ -25,38 +27,17 @@ export default function Loading({ isPageLoaded }: LoadingProps) {
             visible={isModalVisible}
             animationType="fade"
         >
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: theme.options.colors.neutralLight[500],
-                }}
-            >
+            <View style={styles.loadingModal}>
                 <AnimatedLottieView
-                    source={require("../../assets/animations/Light-loading-icon.json")}
+                    source={require("../../assets/animations/eatin-loading-icon.json")}
                     loop={true}
                     autoPlay
-                    style={{ width: 100, height: 100 }}
+                    style={styles.loadingIcon}
                 />
             </View>
         </Modal>,
         isInitialLayerVisible ? (
-            <View
-                key={0}
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    flex: 1,
-                    zIndex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: theme.options.colors.neutralLight[500],
-                }}
-            ></View>
+            <View key={0} style={styles.loadingInitialLayer}></View>
         ) : null,
     ];
 

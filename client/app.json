@@ -6,10 +6,10 @@
         },
         "name": "eatin",
         "slug": "eatin",
-        "backgroundColor": "#fffecb",
-        "primaryColor": "#fffecb",
+        "backgroundColor": "#f9f2dc",
+        "primaryColor": "#f9f2dc",
         "splash": {
-            "backgroundColor": "#fffecb"
+            "backgroundColor": "#f9f2dc"
         },
         "orientation": "portrait"
     }

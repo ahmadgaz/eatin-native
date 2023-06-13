@@ -1,59 +1,47 @@
+import "expo-dev-client";
 import { useRouter } from "expo-router";
-import { View, Text, Image } from "react-native";
+import { useRef, useEffect } from "react";
+import { View, Text, Image, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Loading from "../components/common/loading";
-import useLoadAssets from "../hooks/useLoadAssets";
+import Carousel from "../components/home/carousel";
+import useLoadVideos from "../hooks/useLoadVideos";
 import { useTheme } from "../theme";
+import homeStyles from "../components/home/styles";
+import hexToRgb from "../utils/hexToRgb.js";
+import { Video } from "expo-av";
+import { ResizeMode } from "expo-av/build/Video.types";
 
-const images = [
-    {
-        src: require("../assets/images/Logo-02.png"),
-        style: { width: 150, height: 46.25, margin: 25 },
-    },
-    {
-        src: require("../assets/animations/Hero.gif"),
-        style: { width: 300, height: 300, marginBottom: 15, marginTop: 5 },
-    },
-];
+const screen = Dimensions.get("screen");
 
 // Home page
-// TODO: Add grainy gaussian blurred timewarped bg
 export default function Home() {
     const router = useRouter();
     const theme = useTheme("light");
+    const styles = homeStyles("light");
 
-    const [assetsLoaded, assets] = useLoadAssets(images);
+    const [videosLoaded, videos] = useLoadVideos([
+        {
+            src: require("../assets/videos/herovideo.mp4"),
+            style: {
+                width: screen.width,
+                height: screen.height,
+            },
+            props: {
+                useNativeControls: false,
+                isLooping: true,
+                isMuted: true,
+                shouldPlay: true,
+                resizeMode: ResizeMode.COVER,
+            },
+        },
+    ]);
 
     return (
-        <SafeAreaView
-            style={{
-                flex: 1,
-                justifyContent: "center",
-                padding: 30,
-                alignItems: "center",
-                backgroundColor: theme.options.colors.neutralLight[500],
-            }}
-        >
-            <Loading isPageLoaded={assetsLoaded} />
-            <View>{assets[0]}</View>
-            <Text
-                style={{
-                    textAlign: "center",
-                    ...theme.typography("bold", "italic").h2,
-                }}
-            >
-                Schedule life with ease!
-            </Text>
-            <View>{assets[1]}</View>
-            <Text
-                style={{
-                    textAlign: "center",
-                    ...theme.typography("bold").subtitle1,
-                }}
-            >
-                No more double-bookings, missed appointments, or conflicting
-                schedules.
-            </Text>
-        </SafeAreaView>
+        <View style={styles.container}>
+            <Loading isPageLoaded={videosLoaded} />
+            <Carousel />
+            <View style={styles.heroVideoContainer}>{videos[0]}</View>
+        </View>
     );
 }

@@ -11,118 +11,42 @@ export const tokens = (mode: "light" | "dark") => ({
         mode === "light"
             ? {
                   primary: {
-                      100: "#ffeed5",
-                      200: "#ffdcac",
-                      300: "#fecb82",
-                      400: "#feb959",
-                      500: "#fea82f",
-                      600: "#cb8626",
-                      700: "#98651c",
-                      800: "#664313",
-                      900: "#332209",
+                      500: "#f5c02e",
                   },
                   secondary: {
-                      100: "#dddaf4",
-                      200: "#bbb6e9",
-                      300: "#9891de",
-                      400: "#766dd3",
-                      500: "#5448c8",
-                      600: "#433aa0",
-                      700: "#322b78",
-                      800: "#221d50",
-                      900: "#110e28",
+                      500: "#ffffff",
                   },
-
-                  neutralDark: {
-                      100: "#d9d8d8",
-                      200: "#b3b2b1",
-                      300: "#8e8b89",
-                      400: "#686562",
-                      500: "#423e3b",
-                      600: "#35322f",
-                      700: "#282523",
-                      800: "#1a1918",
-                      900: "#0d0c0c",
+                  accent: {
+                      500: "#8cb408",
                   },
-                  neutralLight: {
-                      100: "#fffff5",
-                      200: "#ffffea",
-                      300: "#fffee0",
-                      400: "#fffed5",
-                      500: "#fffecb",
-                      600: "#cccba2",
-                      700: "#99987a",
-                      800: "#666651",
-                      900: "#333329",
+                  text: {
+                      400: "#ffffff",
+                      500: "#808080",
+                      600: "#000000",
                   },
-                  redAccent: {
-                      100: "#ffd5cc",
-                      200: "#ffab99",
-                      300: "#ff8266",
-                      400: "#ff5833",
-                      500: "#ff2e00",
-                      600: "#cc2500",
-                      700: "#991c00",
-                      800: "#661200",
-                      900: "#330900",
+                  background: {
+                      400: "#ffffff",
+                      500: "#f9f2dc",
                   },
               }
             : {
                   primary: {
-                      100: "#ffeed5",
-                      900: "#ffdcac",
-                      800: "#fecb82",
-                      700: "#feb959",
-                      600: "#fea82f",
-                      500: "#cb8626",
-                      400: "#98651c",
-                      300: "#664313",
-                      200: "#332209",
+                      500: "#f5c02e",
                   },
                   secondary: {
-                      100: "#dddaf4",
-                      200: "#bbb6e9",
-                      300: "#9891de",
-                      400: "#766dd3",
-                      500: "#5448c8",
-                      600: "#433aa0",
-                      700: "#322b78",
-                      800: "#221d50",
-                      900: "#110e28",
+                      500: "#ffffff",
                   },
-
-                  neutralDark: {
-                      100: "#666651",
-                      200: "#99987a",
-                      300: "#99987a",
-                      400: "#cccba2",
-                      500: "#fffecb",
-                      600: "#fffed5",
-                      700: "#fffee0",
-                      800: "#ffffea",
-                      900: "#fffff5",
+                  accent: {
+                      500: "#8cb408",
                   },
-                  neutralLight: {
-                      800: "#d9d8d8",
-                      900: "#b3b2b1",
-                      400: "#8e8b89",
-                      200: "#686562",
-                      300: "#423e3b",
-                      100: "#35322f",
-                      500: "#282523",
-                      600: "#1a1918",
-                      700: "#0d0c0c",
+                  text: {
+                      400: "#ffffff",
+                      500: "#808080",
+                      600: "#000000",
                   },
-                  redAccent: {
-                      100: "#ffd5cc",
-                      200: "#ffab99",
-                      300: "#ff8266",
-                      400: "#ff5833",
-                      500: "#ff2e00",
-                      600: "#cc2500",
-                      700: "#991c00",
-                      800: "#661200",
-                      900: "#330900",
+                  background: {
+                      400: "#ffffff",
+                      500: "#f9f2dc",
                   },
               },
 });
@@ -141,124 +65,132 @@ export const useTheme = (mode: "light" | "dark") => {
                 hero: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProXLBlackItalic"
+                            ? "LatoBlackItalic"
                             : weight === "bold"
-                            ? "ProspectusProXLBlack"
+                            ? "LatoBlack"
                             : style === "italic"
-                            ? "ProspectusProXLItalic"
-                            : "ProspectusProXLRegular",
-                    fontSize: 60,
-                    color: options.colors.neutralDark[500],
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    fontSize: 48,
+                    color: options.colors.text[600],
                 },
                 h1: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProXLBoldItalic"
+                            ? "LatoBlackItalic"
                             : weight === "bold"
-                            ? "ProspectusProXLBold"
+                            ? "LatoBlack"
                             : style === "italic"
-                            ? "ProspectusProXLItalic"
-                            : "ProspectusProXLRegular",
-                    fontSize: 60,
-                    color: options.colors.neutralDark[500],
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    fontSize: 48,
+                    color: options.colors.text[600],
                 },
                 h2: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProLBlackItalic"
+                            ? "LatoBlackItalic"
                             : weight === "bold"
-                            ? "ProspectusProLBlack"
+                            ? "LatoBlack"
                             : style === "italic"
-                            ? "ProspectusProLItalic"
-                            : "ProspectusProLRegular",
-                    fontSize: 48,
-                    color: options.colors.neutralDark[500],
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    fontSize: 36,
+                    color: options.colors.text[600],
                 },
                 h3: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProLBoldItalic"
+                            ? "LatoBlackItalic"
                             : weight === "bold"
-                            ? "ProspectusProLBold"
+                            ? "LatoBlack"
                             : style === "italic"
-                            ? "ProspectusProLItalic"
-                            : "ProspectusProLRegular",
-                    fontSize: 36,
-                    color: options.colors.neutralDark[500],
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    fontSize: 30,
+                    color: options.colors.text[600],
                 },
                 h4: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProMBoldItalic"
+                            ? "LatoBlackItalic"
                             : weight === "bold"
-                            ? "ProspectusProMBold"
+                            ? "LatoBlack"
                             : style === "italic"
-                            ? "ProspectusProMItalic"
-                            : "ProspectusProMRegular",
-                    fontSize: 30,
-                    color: options.colors.neutralDark[500],
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    fontSize: 24,
+                    color: options.colors.text[600],
                 },
                 h5: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProMBoldItalic"
+                            ? "LatoBlackItalic"
                             : weight === "bold"
-                            ? "ProspectusProMBold"
+                            ? "LatoBlack"
                             : style === "italic"
-                            ? "ProspectusProMItalic"
-                            : "ProspectusProMRegular",
-                    fontSize: 24,
-                    color: options.colors.neutralDark[500],
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    fontSize: 21,
+                    color: options.colors.text[600],
                 },
                 h6: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProMBoldItalic"
+                            ? "LatoBlackItalic"
                             : weight === "bold"
-                            ? "ProspectusProMBold"
+                            ? "LatoBlack"
                             : style === "italic"
-                            ? "ProspectusProMItalic"
-                            : "ProspectusProMRegular",
-                    fontSize: 21,
-                    color: options.colors.neutralDark[500],
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    fontSize: 18,
+                    color: options.colors.text[600],
                 },
                 subtitle1: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProMItalic"
+                            ? "LatoBoldItalic"
                             : weight === "bold"
-                            ? "ProspectusProMRegular"
+                            ? "LatoBold"
                             : style === "italic"
-                            ? "ProspectusProMLightItalic"
-                            : "ProspectusProMLight",
-                    fontSize: 18,
-                    color: options.colors.neutralDark[200],
+                            ? "LatoItalic"
+                            : "LatoRegular",
+                    fontSize: 16,
+                    color: options.colors.text[500],
                 },
                 subtitle2: {
                     fontFamily:
                         weight === "bold" && style === "italic"
-                            ? "ProspectusProMBoldItalic"
+                            ? "LatoBlackItalic"
                             : weight === "bold"
-                            ? "ProspectusProMBold"
+                            ? "LatoBlack"
                             : style === "italic"
-                            ? "ProspectusProMItalic"
-                            : "ProspectusProMRegular",
-                    color: options.colors.neutralDark[500],
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    color: options.colors.text[500],
                 },
                 body1: {
                     fontFamily:
-                        style === "italic"
-                            ? "ProspectusProSItalic"
-                            : "ProspectusProSRegular",
-                    fontSize: 21,
-                    color: options.colors.neutralDark[500],
+                        weight === "bold" && style === "italic"
+                            ? "LatoBlackItalic"
+                            : weight === "bold"
+                            ? "LatoBlack"
+                            : style === "italic"
+                            ? "LatoBoldItalic"
+                            : "LatoBold",
+                    fontSize: 18,
+                    color: options.colors.text[600],
                 },
                 body2: {
                     fontFamily:
-                        style === "italic"
-                            ? "ProspectusProSItalic"
-                            : "ProspectusProSRegular",
-                    color: options.colors.neutralDark[500],
+                        weight === "bold" && style === "italic"
+                            ? "LatoLightItalic"
+                            : weight === "bold"
+                            ? "LatoLight"
+                            : style === "italic"
+                            ? "LatoThinItalic"
+                            : "LatoThin",
+                    color: options.colors.text[600],
                 },
             });
         },
