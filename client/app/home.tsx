@@ -1,7 +1,7 @@
 import "expo-dev-client";
 import { useRouter } from "expo-router";
 import { useRef, useEffect } from "react";
-import { View, Text, Image, Dimensions } from "react-native";
+import { View, Text, Image, Dimensions, Modal } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Loading from "../components/common/loading";
 import Carousel from "../components/home/carousel";
@@ -13,6 +13,7 @@ import { Video } from "expo-av";
 import { ResizeMode } from "expo-av/build/Video.types";
 import useLoadImages from "../hooks/useLoadImages";
 import { StatusBar } from "expo-status-bar";
+import ActionSheet from "../components/home/actionSheet";
 
 const screen = Dimensions.get("screen");
 
@@ -38,24 +39,26 @@ export default function Home() {
             },
         },
     ]);
-    // const [imagesLoaded, images] = useLoadImages([
-    //     {
-    //         src: require("../assets/images/trace.png"),
-    //         style: {
-    //             width: screen.width,
-    //             height: screen.height,
-    //         },
-    //     },
-    // ]);
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <StatusBar style="light" />
             <Loading isPageLoaded={videosLoaded} />
+            <ActionSheet screen={screen} />
             <Text style={[theme.typography().logo, styles.logo]}>eatin.</Text>
             <Carousel />
+            <View
+                style={[
+                    {
+                        width: screen.width,
+                        height: screen.height + 50,
+                        bottom: -screen.height + 390,
+                    },
+                    styles.sheetShadow,
+                ]}
+            ></View>
             <View style={styles.backdrop} />
             <View style={styles.heroVideoContainer}>{videos[0]}</View>
-        </View>
+        </SafeAreaView>
     );
 }

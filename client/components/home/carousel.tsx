@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRef, useEffect, useState } from "react";
 import { Text, View, FlatList } from "react-native";
 import { useTheme } from "../../theme";
-import { carouselData } from "./carousel-data";
+import { carouselData } from "./carouselData";
 import Slide from "./slide";
 import { carouselDataType } from "./types";
 import Pagination from "./pagination";
@@ -15,11 +15,13 @@ import Animated, {
 } from "react-native-reanimated";
 import { Dimensions } from "react-native";
 import ceilToNearestIncrement from "../../utils/ceilToNearestIncrement";
+import homeStyles from "./styles";
 
 const screen = Dimensions.get("screen");
 
 export default function Carousel() {
     const theme = useTheme("light");
+    const styles = homeStyles("light");
     const scrollX = useSharedValue(0);
     const [slide, setSlide] = useState<number>(0);
     const handleScroll = useAnimatedScrollHandler({
@@ -47,12 +49,6 @@ export default function Carousel() {
                     prevSlide >= screen.width * (carouselData.length - 1)
                         ? 0
                         : prevSlide + screen.width;
-                console.log(
-                    newSlide,
-                    screen.width,
-                    newSlide + screen.width,
-                    newSlide >= screen.width * (carouselData.length - 1)
-                );
                 carouselRef.current?.scrollToOffset({
                     offset: ceilToNearestIncrement(newSlide, screen.width),
                     animated: true,
@@ -64,7 +60,12 @@ export default function Carousel() {
     }, []);
 
     return (
-        <SafeAreaView>
+        <View
+            style={{
+                width: screen.width,
+                height: screen.height - 600,
+            }}
+        >
             <Animated.FlatList
                 ref={carouselRef}
                 data={carouselData}
@@ -79,6 +80,6 @@ export default function Carousel() {
                 scrollEventThrottle={16}
             />
             <Pagination data={carouselData} scrollX={scrollX} />
-        </SafeAreaView>
+        </View>
     );
 }

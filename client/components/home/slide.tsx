@@ -16,7 +16,6 @@ export default function Slide({ item }: { item: carouselDataType }) {
         <View
             style={{
                 width: screen.width,
-                height: screen.height,
                 ...styles.carouselSlideContainer,
             }}
         >

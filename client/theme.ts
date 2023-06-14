@@ -17,10 +17,12 @@ export const tokens = (mode: "light" | "dark") => ({
                       500: "#ffffff",
                   },
                   accent: {
+                      400: "#d1e19c",
                       500: "#8cb408",
                   },
                   text: {
-                      400: "#ffffff",
+                      300: "#ffffff",
+                      400: "#cccccc",
                       500: "#808080",
                       600: "#000000",
                   },
