@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput } from "react-native";
+import { View, Text, Image, TextInput, Keyboard } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../theme";
 import homeStyles from "./styles";
@@ -9,6 +9,7 @@ import Animated, {
     useSharedValue,
 } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 export default function ActionSheet({
     screen,
@@ -59,7 +60,7 @@ export default function ActionSheet({
                     <Image
                         source={require("../../assets/images/heroimage.png")}
                         style={styles.sheetHeroImage}
-                    ></Image>
+                    />
                 </View>
             </Animated.View>
             <Animated.View style={[styles.sheetSubtitleContainer, hideContent]}>
@@ -78,25 +79,36 @@ export default function ActionSheet({
                     setFullscreen={setFullScreen}
                 />
             </View>
-            <Animated.View style={[styles.sheetSubtitleContainer, showContent]}>
-                <Text style={theme.typography().subtitle1}>
-                    Suggested Searches
-                </Text>
-            </Animated.View>
-            <Animated.View
-                style={[styles.sheetSearchCTAContainer, showContent]}
+            <TouchableWithoutFeedback
+                style={{ minWidth: "100%", height: "100%" }}
+                onPress={Keyboard.dismiss}
             >
-                {!ingredients.length && (
+                <Animated.View
+                    style={[styles.sheetSubtitleContainer, showContent]}
+                >
+                    <Text style={theme.typography().subtitle1}>
+                        Suggested Searches
+                    </Text>
+                </Animated.View>
+                <Animated.View
+                    style={[styles.sheetSearchCTAContainer, showContent]}
+                >
+                    <View style={styles.sheetSearchImageContainer}>
+                        <Image
+                            source={require("../../assets/images/search.png")}
+                            style={styles.sheetSearchImage}
+                        />
+                    </View>
                     <Text
                         style={[
                             theme.typography("normal", "italic").subtitle1,
                             styles.sheetSearchCTA,
                         ]}
                     >
-                        Start typing and we'll suggest ingredients for you.
+                        No results. Try searching for something else.
                     </Text>
-                )}
-            </Animated.View>
+                </Animated.View>
+            </TouchableWithoutFeedback>
         </Animated.View>
     );
 }

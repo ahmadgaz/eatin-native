@@ -78,6 +78,7 @@ export default function Carousel() {
                 showsHorizontalScrollIndicator={false}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
+                overScrollMode="never"
             />
             <Pagination data={carouselData} scrollX={scrollX} />
         </View>

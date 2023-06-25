@@ -5,20 +5,32 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { DeleteIcon } from "../../assets/icons/delete-icon";
 import Animated, {
     Extrapolate,
+    FadeIn,
+    FadeOut,
     interpolate,
+    Layout,
+    LayoutAnimationsValues,
     SharedValue,
     useAnimatedProps,
     useAnimatedStyle,
+    useSharedValue,
+    withTiming,
 } from "react-native-reanimated";
 import hexToRgb from "../../utils/hexToRgb";
 import { useTheme } from "../../theme";
 
 export default function Tag({
+    id,
     text,
     changeColorAnimation,
+    setIngredients,
 }: {
+    id: number;
     text: string;
     changeColorAnimation: SharedValue<number>;
+    setIngredients: React.Dispatch<
+        React.SetStateAction<{ id: number; name: string }[]>
+    >;
 }) {
     const theme = useTheme("light");
     const styles = homeStyles("light");
@@ -123,21 +135,56 @@ export default function Tag({
         };
     });
 
+    // Enter and exit animation
+    const opacity = useSharedValue<number>(0);
+    const fadeIn = () => {
+        opacity.value = withTiming(1, { duration: 100 });
+    };
+    const fadeOut = () => {
+        opacity.value = withTiming(0, { duration: 100 });
+    };
+    const enterExitAnimation = useAnimatedStyle(() => {
+        return {
+            opacity: opacity.value,
+        };
+    });
+
     return (
-        <TouchableOpacity>
-            <Animated.View
-                style={[
-                    styles.sheetTextInputTagContainer,
-                    inputTagContainerColor,
-                ]}
+        <Animated.View layout={Layout.duration(100)}>
+            <TouchableOpacity
+                onLayout={fadeIn}
+                onPress={() => {
+                    fadeOut();
+                    setTimeout(() => {
+                        setIngredients((prev) => {
+                            return prev.filter(
+                                (ingredient) => ingredient.id !== id
+                            );
+                        });
+                    }, 100);
+                }}
             >
-                <Animated.Text
-                    style={[styles.sheetTextInputTagText, inputTagTextColor]}
-                >
-                    {text}
-                </Animated.Text>
-                <DeleteIcon changeColorAnimation={changeColorAnimation} />
-            </Animated.View>
-        </TouchableOpacity>
+                <Animated.View style={[enterExitAnimation]}>
+                    <Animated.View
+                        style={[
+                            styles.sheetTextInputTagContainer,
+                            inputTagContainerColor,
+                        ]}
+                    >
+                        <Animated.Text
+                            style={[
+                                styles.sheetTextInputTagText,
+                                inputTagTextColor,
+                            ]}
+                        >
+                            {text}
+                        </Animated.Text>
+                        <DeleteIcon
+                            changeColorAnimation={changeColorAnimation}
+                        />
+                    </Animated.View>
+                </Animated.View>
+            </TouchableOpacity>
+        </Animated.View>
     );
 }

@@ -1,4 +1,11 @@
-import { View, Text, TextInput } from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    NativeSyntheticEvent,
+    NativeScrollEvent,
+    TextInputSubmitEditingEventData,
+} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import homeStyles from "./styles";
 import { useTheme } from "../../theme";
@@ -6,7 +13,10 @@ import Animated, {
     Easing,
     Extrapolate,
     interpolate,
+    Layout,
+    LayoutAnimationsValues,
     SharedValue,
+    Transition,
     useAnimatedStyle,
     useSharedValue,
     withTiming,
@@ -16,6 +26,11 @@ import Tag from "./tag";
 import { ScrollView } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
+import { ScrollViewWithFadedEnds } from "./scrollViewWithFadedEnds";
+import "react-native-get-random-values";
+import { Platform } from "react-native";
+
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 export default function AutocompleteInput({
     screen,
@@ -100,7 +115,6 @@ export default function AutocompleteInput({
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
     };
-
     const unfocusTheInput = () => {
         sheetHeight.value = withTiming(290 - screen.height, {
             duration: 750,
@@ -112,6 +126,67 @@ export default function AutocompleteInput({
         });
         setFullscreen(false);
         changeColorAnimation.value = 0;
+    };
+
+    const scrollViewRef = useRef<ScrollView>(null);
+    const id = useRef<number>(1);
+    const addIngredient = (
+        text: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+    ) => {
+        textInput.current?.clear();
+        text.persist();
+        if (text?.nativeEvent?.text) {
+            setIngredients((prevIngredients) => [
+                ...prevIngredients,
+                {
+                    id: id.current++,
+                    name: text.nativeEvent.text,
+                },
+            ]);
+        }
+    };
+
+    // Scroll to end of scrollview when an ingredient is added
+    const [ingredientsLength, setIngredientsLength] = useState<number>(
+        ingredients.length
+    );
+    useEffect(() => {
+        if (ingredients.length > ingredientsLength) {
+            setTimeout(() => {
+                scrollViewRef.current?.scrollToEnd({ animated: true });
+            }, 50);
+        }
+        setIngredientsLength(ingredients.length);
+    }, [ingredients]);
+
+    // Fade the ends of the scrollview when the scrollview is scrolled
+    const [fadedEnds, setFadedEnds] = useState<boolean[]>([false, true]); // Whether the ends of the scrollview are faded or not. Used to change the scrollview style.
+    const setFadedEndsLeft = (value: boolean) => {
+        setFadedEnds((prev) => [value, prev[1]]);
+    };
+    const setFadedEndsRight = (value: boolean) => {
+        setFadedEnds((prev) => [prev[0], value]);
+    };
+    const setFadedEndsOnScroll = (
+        event: NativeSyntheticEvent<NativeScrollEvent>
+    ) => {
+        const atStart = event.nativeEvent.contentOffset.x <= 0;
+        const atEnd =
+            event.nativeEvent.contentOffset.x +
+                event.nativeEvent.layoutMeasurement.width >=
+            event.nativeEvent.contentSize.width;
+
+        if (atStart) {
+            setFadedEndsLeft(false);
+        } else {
+            setFadedEndsLeft(true);
+        }
+
+        if (atEnd) {
+            setFadedEndsRight(false);
+        } else {
+            setFadedEndsRight(true);
+        }
     };
 
     // Make sure the input is unfocused when the component mounts
@@ -139,20 +214,8 @@ export default function AutocompleteInput({
                     selectionColor={theme.options.colors.accent[400]}
                     onFocus={focusTheInput}
                     onEndEditing={unfocusTheInput}
-                    onSubmitEditing={(text) => {
-                        text.persist();
-                        // textInput.current?.
-                        if (text?.nativeEvent?.text) {
-                            setIngredients((prevIngredients) => [
-                                ...prevIngredients,
-                                {
-                                    id: prevIngredients.length,
-                                    name: text.nativeEvent.text,
-                                },
-                            ]);
-                        }
-                        textInput.current?.clear();
-                    }}
+                    onSubmitEditing={addIngredient}
+                    blurOnSubmit={false}
                 />
                 <View
                     style={{
@@ -162,47 +225,65 @@ export default function AutocompleteInput({
                         position: "relative",
                     }}
                 >
-                    <MaskedView
-                        style={{
-                            flex: 1,
-                            flexDirection: "row",
-                            height: "100%",
-                        }}
-                        maskElement={
-                            <LinearGradient
-                                style={{
-                                    flex: 1,
-                                    flexDirection: "row",
-                                    height: "100%",
-                                }}
-                                colors={[
-                                    "transparent",
-                                    "#192f6a",
-                                    "#192f6a",
-                                    "transparent",
-                                ]}
-                                locations={[0, 0 + 0.05, 1 - 0.05, 1]}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                            />
-                        }
-                    >
-                        <ScrollView
+                    {Platform.OS === "ios" ? (
+                        <ScrollViewWithFadedEnds
+                            ref={scrollViewRef}
                             contentContainerStyle={{ alignItems: "center" }}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             alwaysBounceHorizontal={false}
+                            fadeLeftEnd={fadedEnds[0]}
+                            fadeRightEnd={fadedEnds[1]}
+                            onScroll={setFadedEndsOnScroll}
+                            scrollEventThrottle={16}
+                            keyboardShouldPersistTaps="always"
                         >
                             {ingredients.map((ingredient) => (
                                 <Tag
                                     key={ingredient.id}
+                                    id={ingredient.id}
                                     text={ingredient.name}
+                                    setIngredients={setIngredients}
                                     changeColorAnimation={changeColorAnimation}
                                 />
                             ))}
-                        </ScrollView>
-                    </MaskedView>
+                        </ScrollViewWithFadedEnds>
+                    ) : (
+                        <AnimatedScrollView
+                            overScrollMode="never"
+                            ref={scrollViewRef}
+                            contentContainerStyle={{ alignItems: "center" }}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            onScroll={setFadedEndsOnScroll}
+                            scrollEventThrottle={16}
+                            fadingEdgeLength={30}
+                            keyboardShouldPersistTaps="always"
+                        >
+                            {ingredients.map((ingredient) => (
+                                <Tag
+                                    key={ingredient.id}
+                                    id={ingredient.id}
+                                    text={ingredient.name}
+                                    setIngredients={setIngredients}
+                                    changeColorAnimation={changeColorAnimation}
+                                />
+                            ))}
+                        </AnimatedScrollView>
+                    )}
                 </View>
+                {!ingredients.length && (
+                    <View style={{ position: "relative", width: "100%" }}>
+                        <Text
+                            style={[
+                                theme.typography("normal", "italic").subtitle1,
+                                styles.sheetTextInputCTA,
+                            ]}
+                        >
+                            Hit 'Enter' to add an ingredient.
+                        </Text>
+                    </View>
+                )}
             </Animated.View>
         </>
     );

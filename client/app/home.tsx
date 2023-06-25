@@ -41,24 +41,28 @@ export default function Home() {
     ]);
 
     return (
-        <SafeAreaView style={styles.container}>
-            <StatusBar style="light" />
+        <>
             <Loading isPageLoaded={videosLoaded} />
-            <ActionSheet screen={screen} />
-            <Text style={[theme.typography().logo, styles.logo]}>eatin.</Text>
-            <Carousel />
-            <View
-                style={[
-                    {
-                        width: screen.width,
-                        height: screen.height + 50,
-                        bottom: -screen.height + 390,
-                    },
-                    styles.sheetShadow,
-                ]}
-            ></View>
-            <View style={styles.backdrop} />
-            <View style={styles.heroVideoContainer}>{videos[0]}</View>
-        </SafeAreaView>
+            <SafeAreaView style={styles.container}>
+                <StatusBar style="light" />
+                <ActionSheet screen={screen} />
+                <Text style={[theme.typography().logo, styles.logo]}>
+                    eatin.
+                </Text>
+                <Carousel />
+                <View
+                    style={[
+                        {
+                            width: screen.width,
+                            height: screen.height + 50,
+                            bottom: -screen.height + 390,
+                        },
+                        styles.sheetShadow,
+                    ]}
+                ></View>
+                <View style={styles.backdrop} />
+                <View style={styles.heroVideoContainer}>{videos[0]}</View>
+            </SafeAreaView>
+        </>
     );
 }

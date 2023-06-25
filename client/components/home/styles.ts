@@ -111,14 +111,12 @@ export default function styles(mode: "light" | "dark") {
         sheetSearchCTAContainer: {
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: "row",
+            flexDirection: "column",
             flexWrap: "nowrap",
-            marginBottom: 30,
+            marginTop: 50,
         },
         sheetSearchCTA: {
-            fontSize: 36,
-            marginTop: 30,
-            opacity: 0.5,
+            marginTop: 15,
             textAlign: "center",
         },
         sheetAutoCompleteInputContainer: {
@@ -129,12 +127,13 @@ export default function styles(mode: "light" | "dark") {
             flexWrap: "nowrap",
             marginBottom: 20,
         },
-        sheetTextInputTitle: {
+        sheetTextInputCTA: {
             position: "absolute",
             fontSize: 14,
+            left: 0,
             zIndex: 1,
-            top: 20,
-            left: 20,
+            transform: [{ translateY: -25 }],
+            color: theme.options.colors.text[400],
         },
         sheetTextInputContainer: {
             width: "100%",
@@ -181,6 +180,17 @@ export default function styles(mode: "light" | "dark") {
         sheetHeroImage: {
             width: 80,
             height: 80,
+        },
+        sheetSearchImageContainer: {
+            width: 90,
+            height: 90,
+            borderRadius: 45,
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        sheetSearchImage: {
+            width: 60,
+            height: 75,
         },
     });
 }

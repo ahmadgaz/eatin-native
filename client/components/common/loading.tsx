@@ -28,7 +28,7 @@ export default function Loading({ isPageLoaded }: LoadingProps) {
             visible={isModalVisible}
             animationType="fade"
         >
-            <StatusBar style="dark" />
+            <StatusBar style="dark" translucent={false} />
             <View style={styles.loadingModal}>
                 <AnimatedLottieView
                     source={require("../../assets/animations/eatin-loading-icon.json")}
