@@ -4,3 +4,4 @@ export type carouselDataType = {
     title: string;
     description: string;
 };
+export type ingredientDataType = { id: number; name: string };

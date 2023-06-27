@@ -5,6 +5,7 @@ import { useTheme } from "../../theme";
 export default function styles(mode: "light" | "dark") {
     const theme = useTheme(mode);
     return StyleSheet.create({
+        /* CAROUSEL*/
         carouselPaginationContainer: {
             position: "absolute",
             bottom: 0,
@@ -40,6 +41,8 @@ export default function styles(mode: "light" | "dark") {
             color: theme.options.colors.background[500],
             textAlign: "left",
         },
+
+        /*BACKGROUND*/
         logo: {
             marginVertical: 20,
             color: theme.options.colors.background[500],
@@ -72,6 +75,8 @@ export default function styles(mode: "light" | "dark") {
             backgroundColor: "black",
             opacity: 0.3,
         },
+
+        /*SHEET*/
         sheetShadow: {
             position: "absolute",
             zIndex: -1,
@@ -108,6 +113,35 @@ export default function styles(mode: "light" | "dark") {
             flexWrap: "nowrap",
             marginBottom: 30,
         },
+        sheetCTA: {
+            position: "absolute",
+            top: 5,
+            zIndex: 1,
+            width: "100%",
+            paddingHorizontal: 35,
+            height: 60,
+            borderRadius: 30,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: theme.options.colors.accent[500],
+            shadowRadius: 15,
+            shadowOpacity: 0.03,
+            shadowOffset: { width: 0, height: 10 },
+        },
+        sheetHeroImageContainer: {
+            width: 90,
+            height: 90,
+            backgroundColor: theme.options.colors.background[400],
+            borderRadius: 45,
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        sheetHeroImage: {
+            width: 80,
+            height: 80,
+        },
+
+        /*SHEET INPUT*/
         sheetSearchCTAContainer: {
             justifyContent: "center",
             alignItems: "center",
@@ -169,18 +203,8 @@ export default function styles(mode: "light" | "dark") {
             height: 20,
             color: theme.options.colors.text[400],
         },
-        sheetHeroImageContainer: {
-            width: 90,
-            height: 90,
-            backgroundColor: theme.options.colors.background[400],
-            borderRadius: 45,
-            justifyContent: "center",
-            alignItems: "center",
-        },
-        sheetHeroImage: {
-            width: 80,
-            height: 80,
-        },
+
+        /*SHEET SEARCH*/
         sheetSearchImageContainer: {
             width: 90,
             height: 90,

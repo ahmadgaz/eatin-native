@@ -9,7 +9,11 @@ import Animated, {
     useSharedValue,
 } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import {
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
+import { ingredientDataType } from "./types";
 
 export default function ActionSheet({
     screen,
@@ -21,9 +25,9 @@ export default function ActionSheet({
     const contentOpacity = useSharedValue<number>(1); // Fade-in/ Fade-out actionsheet content using this value. Changes based on whether input is focused or not.
     const sheetHeight = useSharedValue<number>(290 - screen.height); // Length the absolutely positioned action sheet is away from bottom of screen. Changes based on whether input is focused or not
     const [fullScreen, setFullScreen] = useState<boolean>(false); // Whether the action sheet is fullscreen or not. Used to change status bar color. Changes based on whether input is focused or not
-    const [ingredients, setIngredients] = useState<
-        { id: number; name: string }[]
-    >([{ id: 0, name: "Carrots" }]);
+    const [ingredients, setIngredients] = useState<ingredientDataType[]>([
+        { id: 0, name: "Carrots" },
+    ]);
     const hideContent = useAnimatedStyle(() => {
         return {
             opacity: contentOpacity.value,
@@ -78,36 +82,59 @@ export default function ActionSheet({
                     setFullscreen={setFullScreen}
                 />
             </View>
-            <TouchableWithoutFeedback
-                style={{ minWidth: "100%", height: "100%" }}
-                onPress={Keyboard.dismiss}
-            >
-                <Animated.View
-                    style={[styles.sheetSubtitleContainer, showContent]}
-                >
-                    <Text style={theme.typography().subtitle1}>
-                        Suggested Searches
-                    </Text>
-                </Animated.View>
-                <Animated.View
-                    style={[styles.sheetSearchCTAContainer, showContent]}
-                >
-                    <View style={styles.sheetSearchImageContainer}>
-                        <Image
-                            source={require("../../assets/images/search.png")}
-                            style={styles.sheetSearchImage}
-                        />
-                    </View>
-                    <Text
-                        style={[
-                            theme.typography("normal", "italic").subtitle1,
-                            styles.sheetSearchCTA,
-                        ]}
+            <View style={{ width: "100%", position: "relative" }}>
+                <Animated.View style={[styles.sheetCTA, hideContent]}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            if (fullScreen) return;
+                        }}
                     >
-                        No results. Try searching for something else.
-                    </Text>
+                        <Text
+                            style={[
+                                theme.typography().subtitle1,
+                                {
+                                    fontSize: 18,
+                                    color: theme.options.colors.text[300],
+                                },
+                            ]}
+                        >
+                            Get Started
+                        </Text>
+                    </TouchableOpacity>
                 </Animated.View>
-            </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                    style={{ minWidth: "100%", height: "100%" }}
+                    onPress={Keyboard.dismiss}
+                >
+                    <Animated.View
+                        style={[styles.sheetSubtitleContainer, showContent]}
+                    >
+                        <Text style={theme.typography().subtitle1}>
+                            Suggested Recipes
+                        </Text>
+                    </Animated.View>
+                    <Animated.View
+                        style={[styles.sheetSearchCTAContainer, showContent]}
+                    >
+                        <View style={styles.sheetSearchImageContainer}>
+                            <Image
+                                source={require("../../assets/images/search.png")}
+                                style={styles.sheetSearchImage}
+                            />
+                        </View>
+                        <Text
+                            style={[
+                                theme.typography("normal", "italic").subtitle1,
+                                styles.sheetSearchCTA,
+                            ]}
+                        >
+                            {ingredients.length > 0
+                                ? "No results. Try searching for something else."
+                                : "Add some ingredients to your list!"}
+                        </Text>
+                    </Animated.View>
+                </TouchableWithoutFeedback>
+            </View>
         </Animated.View>
     );
 }

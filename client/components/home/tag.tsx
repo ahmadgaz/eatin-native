@@ -19,6 +19,7 @@ import Animated, {
 } from "react-native-reanimated";
 import hexToRgb from "../../utils/hexToRgb";
 import { useTheme } from "../../theme";
+import { ingredientDataType } from "./types";
 
 export default function Tag({
     id,
@@ -29,9 +30,7 @@ export default function Tag({
     id: number;
     text: string;
     changeColorAnimation: SharedValue<number>;
-    setIngredients: React.Dispatch<
-        React.SetStateAction<{ id: number; name: string }[]>
-    >;
+    setIngredients: React.Dispatch<React.SetStateAction<ingredientDataType[]>>;
 }) {
     const theme = useTheme("light");
     const styles = homeStyles("light");

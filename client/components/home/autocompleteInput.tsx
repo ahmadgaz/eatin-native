@@ -32,6 +32,7 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import { ScrollViewWithFadedEnds } from "./scrollViewWithFadedEnds";
 import "react-native-get-random-values";
 import { Platform } from "react-native";
+import { ingredientDataType } from "./types";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
@@ -46,10 +47,8 @@ export default function AutocompleteInput({
     screen: { width: number; height: number };
     sheetHeight: SharedValue<number>;
     contentOpacity: SharedValue<number>;
-    ingredients: { id: number; name: string }[];
-    setIngredients: React.Dispatch<
-        React.SetStateAction<{ id: number; name: string }[]>
-    >;
+    ingredients: ingredientDataType[];
+    setIngredients: React.Dispatch<React.SetStateAction<ingredientDataType[]>>;
     setFullscreen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     const theme = useTheme("light");
@@ -104,13 +103,13 @@ export default function AutocompleteInput({
         - changeColorAnimation changes to change the color of the input border and tag elements.
     */
     const focusTheInput = () => {
+        setFullscreen(true);
         sheetHeight.value = withTiming(0, {
             duration: 750,
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
-        setFullscreen(true);
         contentOpacity.value = withTiming(0, {
-            duration: 750,
+            duration: 500,
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
         changeColorAnimation.value = withTiming(100, {
@@ -119,16 +118,19 @@ export default function AutocompleteInput({
         });
     };
     const unfocusTheInput = () => {
+        setFullscreen(false);
         sheetHeight.value = withTiming(290 - screen.height, {
             duration: 750,
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
         contentOpacity.value = withTiming(1, {
+            duration: 500,
+            easing: Easing.bezier(0.25, 1, 0.5, 1),
+        });
+        changeColorAnimation.value = withTiming(0, {
             duration: 750,
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
-        setFullscreen(false);
-        changeColorAnimation.value = 0;
     };
 
     // Add ingredients to the list
