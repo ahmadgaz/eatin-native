@@ -65,8 +65,7 @@ export default function ActionSheet({
             </Animated.View>
             <Animated.View style={[styles.sheetSubtitleContainer, hideContent]}>
                 <Text style={theme.typography().subtitle1}>
-                    Start typing the ingredients you have on hand in the space
-                    below.
+                    Type your ingredients comma-seperated in the space below.
                 </Text>
             </Animated.View>
             <View style={styles.sheetAutoCompleteInputContainer}>

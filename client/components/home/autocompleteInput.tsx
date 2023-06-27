@@ -5,6 +5,7 @@ import {
     NativeSyntheticEvent,
     NativeScrollEvent,
     TextInputSubmitEditingEventData,
+    Keyboard,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import homeStyles from "./styles";
@@ -12,6 +13,8 @@ import { useTheme } from "../../theme";
 import Animated, {
     Easing,
     Extrapolate,
+    FadeIn,
+    FadeOut,
     interpolate,
     Layout,
     LayoutAnimationsValues,
@@ -128,7 +131,7 @@ export default function AutocompleteInput({
         changeColorAnimation.value = 0;
     };
 
-    const scrollViewRef = useRef<ScrollView>(null);
+    // Add ingredients to the list
     const id = useRef<number>(1);
     const addIngredient = (
         text: NativeSyntheticEvent<TextInputSubmitEditingEventData>
@@ -138,25 +141,18 @@ export default function AutocompleteInput({
         if (text?.nativeEvent?.text) {
             setIngredients((prevIngredients) => [
                 ...prevIngredients,
-                {
+                ...text.nativeEvent.text.split(",").map((name) => ({
                     id: id.current++,
-                    name: text.nativeEvent.text,
-                },
+                    name,
+                })),
             ]);
         }
     };
 
-    // Scroll to end of scrollview when an ingredient is added
-    const [ingredientsLength, setIngredientsLength] = useState<number>(
-        ingredients.length
-    );
+    // Reference to scroll view for using scrollTo({x: 0, animated: true}}), this is needed to update faded ends on IOS
+    const scrollViewRef = useRef<ScrollView>(null);
     useEffect(() => {
-        if (ingredients.length > ingredientsLength) {
-            setTimeout(() => {
-                scrollViewRef.current?.scrollToEnd({ animated: true });
-            }, 50);
-        }
-        setIngredientsLength(ingredients.length);
+        scrollViewRef.current?.scrollTo({ x: 0, animated: true });
     }, [ingredients]);
 
     // Fade the ends of the scrollview when the scrollview is scrolled
@@ -228,7 +224,10 @@ export default function AutocompleteInput({
                     {Platform.OS === "ios" ? (
                         <ScrollViewWithFadedEnds
                             ref={scrollViewRef}
-                            contentContainerStyle={{ alignItems: "center" }}
+                            contentContainerStyle={{
+                                alignItems: "center",
+                                flexDirection: "row-reverse",
+                            }}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             alwaysBounceHorizontal={false}
@@ -252,7 +251,10 @@ export default function AutocompleteInput({
                         <AnimatedScrollView
                             overScrollMode="never"
                             ref={scrollViewRef}
-                            contentContainerStyle={{ alignItems: "center" }}
+                            contentContainerStyle={{
+                                alignItems: "center",
+                                flexDirection: "row-reverse",
+                            }}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             onScroll={setFadedEndsOnScroll}
@@ -274,14 +276,16 @@ export default function AutocompleteInput({
                 </View>
                 {!ingredients.length && (
                     <View style={{ position: "relative", width: "100%" }}>
-                        <Text
+                        <Animated.Text
+                            entering={FadeIn.duration(100)}
+                            exiting={FadeOut.duration(100)}
                             style={[
                                 theme.typography("normal", "italic").subtitle1,
                                 styles.sheetTextInputCTA,
                             ]}
                         >
-                            Hit 'Enter' to add an ingredient.
-                        </Text>
+                            Hit 'Return' to add an ingredient.
+                        </Animated.Text>
                     </View>
                 )}
             </Animated.View>

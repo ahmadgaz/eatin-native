@@ -4,6 +4,7 @@ import homeStyles from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { DeleteIcon } from "../../assets/icons/delete-icon";
 import Animated, {
+    Easing,
     Extrapolate,
     FadeIn,
     FadeOut,
@@ -138,7 +139,7 @@ export default function Tag({
     // Enter and exit animation
     const opacity = useSharedValue<number>(0);
     const fadeIn = () => {
-        opacity.value = withTiming(1, { duration: 100 });
+        opacity.value = withTiming(1, { duration: 300 });
     };
     const fadeOut = () => {
         opacity.value = withTiming(0, { duration: 100 });
@@ -150,7 +151,11 @@ export default function Tag({
     });
 
     return (
-        <Animated.View layout={Layout.duration(100)}>
+        <Animated.View
+            layout={Layout.duration(500).easing(
+                Easing.bezier(0.25, 1, 0.75, 1).factory()
+            )}
+        >
             <TouchableOpacity
                 onLayout={fadeIn}
                 onPress={() => {
@@ -161,7 +166,7 @@ export default function Tag({
                                 (ingredient) => ingredient.id !== id
                             );
                         });
-                    }, 100);
+                    }, 300);
                 }}
             >
                 <Animated.View style={[enterExitAnimation]}>

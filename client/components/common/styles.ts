@@ -18,7 +18,7 @@ export default function styles(mode: "light" | "dark") {
             right: 0,
             bottom: 0,
             flex: 1,
-            zIndex: 2,
+            zIndex: 10,
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: theme.options.colors.background[500],
