@@ -19,7 +19,7 @@ import homeStyles from "./styles";
 
 const screen = Dimensions.get("screen");
 
-export default function Carousel() {
+export default function Carousel({ fullScreen }: { fullScreen: boolean }) {
     const theme = useTheme("light");
     const styles = homeStyles("light");
     const scrollX = useSharedValue(0);
@@ -43,6 +43,7 @@ export default function Carousel() {
 
     const carouselRef = useRef<any>(null);
     useEffect(() => {
+        if (fullScreen) return;
         const intervalId = setInterval(() => {
             setSlide((prevSlide) => {
                 const newSlide =
@@ -57,7 +58,7 @@ export default function Carousel() {
             });
         }, 7000);
         return () => clearInterval(intervalId);
-    }, []);
+    }, [fullScreen]);
 
     return (
         <View

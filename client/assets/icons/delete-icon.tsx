@@ -14,7 +14,7 @@ const AnimatedPath = Animated.createAnimatedComponent(Path);
 export const DeleteIcon = ({
     changeColorAnimation,
 }: {
-    changeColorAnimation: SharedValue<number>;
+    changeColorAnimation?: SharedValue<number>;
 }) => {
     const theme = useTheme("light");
     const inputRange = [0, 100, 0];
@@ -24,16 +24,19 @@ export const DeleteIcon = ({
     const b = hexToRgb(theme.options.colors.accent[500]).b;
 
     const inputTagIconGreenOpacity = useAnimatedStyle(() => {
-        const inputColorOpacity = interpolate(
-            changeColorAnimation.value,
-            inputRange,
-            [0, 1, 0],
-            Extrapolate.CLAMP
-        );
+        if (changeColorAnimation) {
+            const inputColorOpacity = interpolate(
+                changeColorAnimation.value,
+                inputRange,
+                [0, 1, 0],
+                Extrapolate.CLAMP
+            );
 
-        return {
-            opacity: inputColorOpacity,
-        };
+            return {
+                opacity: inputColorOpacity,
+            };
+        }
+        return {};
     });
 
     return (

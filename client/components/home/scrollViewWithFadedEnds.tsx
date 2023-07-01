@@ -26,6 +26,7 @@ interface ScrollViewWithFadedEndsProps
         ScrollViewPropsIOS {
     fadeRightEnd: boolean;
     fadeLeftEnd: boolean;
+    vert?: boolean;
 }
 
 export const ScrollViewWithFadedEnds = forwardRef(
@@ -33,6 +34,7 @@ export const ScrollViewWithFadedEnds = forwardRef(
         {
             fadeLeftEnd,
             fadeRightEnd,
+            vert,
             children,
             ...props
         }: React.PropsWithChildren<ScrollViewWithFadedEndsProps>,
@@ -73,7 +75,7 @@ export const ScrollViewWithFadedEnds = forwardRef(
                             return prev;
                         }
                         return Math.min(
-                            Math.floor((prev + 0.005) * 1000) / 1000,
+                            Math.floor((prev + 0.01) * 1000) / 1000,
                             0.05
                         );
                     });
@@ -87,7 +89,7 @@ export const ScrollViewWithFadedEnds = forwardRef(
                             return prev;
                         }
                         return Math.max(
-                            Math.floor((prev - 0.005) * 1000) / 1000,
+                            Math.floor((prev - 0.01) * 1000) / 1000,
                             0
                         );
                     });
@@ -104,7 +106,7 @@ export const ScrollViewWithFadedEnds = forwardRef(
                             return prev;
                         }
                         return Math.min(
-                            Math.floor((prev + 0.005) * 1000) / 1000,
+                            Math.floor((prev + 0.01) * 1000) / 1000,
                             0.05
                         );
                     });
@@ -118,13 +120,12 @@ export const ScrollViewWithFadedEnds = forwardRef(
                             return prev;
                         }
                         return Math.max(
-                            Math.floor((prev - 0.005) * 1000) / 1000,
+                            Math.floor((prev - 0.01) * 1000) / 1000,
                             0
                         );
                     });
                 }, 10);
             }
-            console.log(fadeLeftEnd, fadeRightEnd);
         }, [fadeLeftEnd, fadeRightEnd]);
 
         return (
@@ -142,9 +143,14 @@ export const ScrollViewWithFadedEnds = forwardRef(
                             "#192f6a",
                             "transparent",
                         ]}
-                        locations={[0, 0 + leftEndFade, 1 - rightEndFade, 1]}
+                        locations={[
+                            0,
+                            vert ? 0 + leftEndFade / 3 : 0 + leftEndFade,
+                            vert ? 1 - rightEndFade / 3 : 1 - rightEndFade,
+                            1,
+                        ]}
                         start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
+                        end={{ x: vert ? 0 : 1, y: vert ? 1 : 0 }}
                     />
                 }
             >

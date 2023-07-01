@@ -1,6 +1,6 @@
 import "expo-dev-client";
 import { useRouter } from "expo-router";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { View, Text, Image, Dimensions, Modal } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Loading from "../components/common/loading";
@@ -23,6 +23,8 @@ export default function Home() {
     const theme = useTheme("light");
     const styles = homeStyles("light");
 
+    const [fullScreen, setFullScreen] = useState<boolean>(false); // Whether the action sheet is fullscreen or not. Used to change status bar color. Changes based on whether input is focused or not
+
     const [videosLoaded, videos] = useLoadVideos([
         {
             src: require("../assets/videos/herovideo.mp4"),
@@ -34,7 +36,7 @@ export default function Home() {
                 useNativeControls: false,
                 isLooping: true,
                 isMuted: true,
-                shouldPlay: true,
+                shouldPlay: !fullScreen,
                 resizeMode: ResizeMode.COVER,
             },
         },
@@ -45,11 +47,15 @@ export default function Home() {
             <Loading isPageLoaded={videosLoaded} />
             <SafeAreaView style={styles.container}>
                 <StatusBar style="light" />
-                <ActionSheet screen={screen} />
+                <ActionSheet
+                    screen={screen}
+                    fullScreen={fullScreen}
+                    setFullScreen={setFullScreen}
+                />
                 <Text style={[theme.typography().logo, styles.logo]}>
                     eatin.
                 </Text>
-                <Carousel />
+                <Carousel fullScreen={fullScreen} />
                 <View
                     style={[
                         {

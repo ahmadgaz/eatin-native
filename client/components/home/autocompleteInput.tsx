@@ -25,14 +25,15 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import hexToRgb from "../../utils/hexToRgb";
-import Tag from "./tag";
+import Tag from "../common/tag";
 import { ScrollView } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { ScrollViewWithFadedEnds } from "./scrollViewWithFadedEnds";
 import "react-native-get-random-values";
 import { Platform } from "react-native";
-import { ingredientDataType } from "./types";
+import { ingredientDataType } from "../common/types";
+import { DeleteIcon } from "../../assets/icons/delete-icon";
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
@@ -109,7 +110,7 @@ export default function AutocompleteInput({
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
         contentOpacity.value = withTiming(0, {
-            duration: 500,
+            duration: 400,
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
         changeColorAnimation.value = withTiming(100, {
@@ -124,7 +125,7 @@ export default function AutocompleteInput({
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
         contentOpacity.value = withTiming(1, {
-            duration: 500,
+            duration: 400,
             easing: Easing.bezier(0.25, 1, 0.5, 1),
         });
         changeColorAnimation.value = withTiming(0, {
@@ -244,8 +245,25 @@ export default function AutocompleteInput({
                                     key={ingredient.id}
                                     id={ingredient.id}
                                     text={ingredient.name}
-                                    setIngredients={setIngredients}
+                                    setList={setIngredients}
+                                    colors={{
+                                        background: [
+                                            theme.options.colors.text[400],
+                                            theme.options.colors.accent[400],
+                                        ],
+                                        text: [
+                                            theme.options.colors.text[500],
+                                            theme.options.colors.accent[500],
+                                        ],
+                                    }}
                                     changeColorAnimation={changeColorAnimation}
+                                    iconRight={
+                                        <DeleteIcon
+                                            changeColorAnimation={
+                                                changeColorAnimation
+                                            }
+                                        />
+                                    }
                                 />
                             ))}
                         </ScrollViewWithFadedEnds>
@@ -259,8 +277,6 @@ export default function AutocompleteInput({
                             }}
                             horizontal
                             showsHorizontalScrollIndicator={false}
-                            onScroll={setFadedEndsOnScroll}
-                            scrollEventThrottle={16}
                             fadingEdgeLength={30}
                             keyboardShouldPersistTaps="always"
                         >
@@ -269,8 +285,25 @@ export default function AutocompleteInput({
                                     key={ingredient.id}
                                     id={ingredient.id}
                                     text={ingredient.name}
-                                    setIngredients={setIngredients}
+                                    setList={setIngredients}
+                                    colors={{
+                                        background: [
+                                            theme.options.colors.text[400],
+                                            theme.options.colors.accent[400],
+                                        ],
+                                        text: [
+                                            theme.options.colors.text[500],
+                                            theme.options.colors.accent[500],
+                                        ],
+                                    }}
                                     changeColorAnimation={changeColorAnimation}
+                                    iconRight={
+                                        <DeleteIcon
+                                            changeColorAnimation={
+                                                changeColorAnimation
+                                            }
+                                        />
+                                    }
                                 />
                             ))}
                         </AnimatedScrollView>

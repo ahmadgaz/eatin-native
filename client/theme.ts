@@ -11,6 +11,7 @@ export const tokens = (mode: "light" | "dark") => ({
         mode === "light"
             ? {
                   primary: {
+                      400: "#F1DA9C",
                       500: "#f5c02e",
                   },
                   secondary: {
@@ -33,16 +34,19 @@ export const tokens = (mode: "light" | "dark") => ({
               }
             : {
                   primary: {
+                      400: "#F1DA9C",
                       500: "#f5c02e",
                   },
                   secondary: {
                       500: "#ffffff",
                   },
                   accent: {
+                      400: "#d1e19c",
                       500: "#8cb408",
                   },
                   text: {
-                      400: "#ffffff",
+                      300: "#ffffff",
+                      400: "#cccccc",
                       500: "#808080",
                       600: "#000000",
                   },
@@ -79,6 +83,7 @@ export const useTheme = (mode: "light" | "dark") => {
                             ? "LatoBoldItalic"
                             : "LatoBold",
                     fontSize: 48,
+                    letterSpacing: -0.8,
                     color: options.colors.text[600],
                 },
                 h2: {
@@ -90,6 +95,7 @@ export const useTheme = (mode: "light" | "dark") => {
                             : style === "italic"
                             ? "LatoBoldItalic"
                             : "LatoBold",
+                    letterSpacing: -0.8,
                     fontSize: 36,
                     color: options.colors.text[600],
                 },
@@ -102,6 +108,7 @@ export const useTheme = (mode: "light" | "dark") => {
                             : style === "italic"
                             ? "LatoBoldItalic"
                             : "LatoBold",
+                    letterSpacing: -0.8,
                     fontSize: 30,
                     color: options.colors.text[600],
                 },

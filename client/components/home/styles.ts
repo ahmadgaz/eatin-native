@@ -111,22 +111,18 @@ export default function styles(mode: "light" | "dark") {
             alignItems: "center",
             flexDirection: "row",
             flexWrap: "nowrap",
-            marginBottom: 30,
+            marginBottom: 20,
         },
         sheetCTA: {
             position: "absolute",
-            top: 5,
+            top: 0,
             zIndex: 1,
             width: "100%",
-            paddingHorizontal: 35,
-            height: 60,
-            borderRadius: 30,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: theme.options.colors.accent[500],
-            shadowRadius: 15,
-            shadowOpacity: 0.03,
-            shadowOffset: { width: 0, height: 10 },
+        },
+        sheetGenerateCTA: {
+            width: "100%",
+            backgroundColor: theme.options.colors.primary[500],
+            marginBottom: 10,
         },
         sheetHeroImageContainer: {
             width: 90,
@@ -137,22 +133,11 @@ export default function styles(mode: "light" | "dark") {
             alignItems: "center",
         },
         sheetHeroImage: {
-            width: 80,
+            width: 81,
             height: 80,
         },
 
         /*SHEET INPUT*/
-        sheetSearchCTAContainer: {
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            flexWrap: "nowrap",
-            marginTop: 50,
-        },
-        sheetSearchCTA: {
-            marginTop: 15,
-            textAlign: "center",
-        },
         sheetAutoCompleteInputContainer: {
             width: "100%",
             justifyContent: "space-between",
@@ -178,7 +163,7 @@ export default function styles(mode: "light" | "dark") {
             flexWrap: "nowrap",
             backgroundColor: theme.options.colors.background[400],
             borderWidth: 1,
-            borderRadius: 20,
+            borderRadius: 25,
             shadowRadius: 15,
             shadowOpacity: 0.03,
             shadowOffset: { width: 0, height: 10 },
@@ -205,14 +190,28 @@ export default function styles(mode: "light" | "dark") {
         },
 
         /*SHEET SEARCH*/
+        sheetSearchCTAContainer: {
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            paddingTop: 150,
+        },
+        sheetSearchCTA: {
+            marginTop: 15,
+            textAlign: "center",
+        },
         sheetSearchImageContainer: {
-            width: 90,
-            height: 90,
+            position: "relative",
+            width: 60,
+            height: 0,
             borderRadius: 45,
             justifyContent: "center",
             alignItems: "center",
         },
         sheetSearchImage: {
+            position: "absolute",
+            top: 60,
             width: 60,
             height: 75,
         },
